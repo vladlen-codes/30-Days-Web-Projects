@@ -1,4 +1,4 @@
-# 🧲 Day 01 / 30 — Magnetic Cursor
+# Day 01 / 30 — Magnetic Cursor
 
 > **30 Days of Insane Web Development** — Building one wild UI experiment every day.
 
@@ -9,25 +9,25 @@
 
 ---
 
-## ✨ What I Built
+## What I Built?
 
 A **magnetic cursor effect** where UI elements get physically attracted to your cursor as it moves nearby — built from scratch with zero libraries. Just pure math and `requestAnimationFrame`.
 
-- 🧲 Buttons magnetically pull toward the cursor within a set radius
-- 💜 Custom cursor with a lagging ring for a juicy, premium feel
-- ✨ Particle trail that spawns glowing purple/magenta particles as you move
-- 🤖 Idle demo loop — auto-animates when the user hasn't moved yet
-- 📱 Styled as a phone frame (390×844px) — perfect for Instagram Reels
+-  Buttons magnetically pull toward the cursor within a set radius
+-  Custom cursor with a lagging ring for a juicy, premium feel
+-  Particle trail that spawns glowing purple/magenta particles as you move
+-  Idle demo loop — auto-animates when the user hasn't moved yet
+-  Styled as a phone frame (390×844px) — perfect for Instagram Reels
 
 ---
 
-## 🎬 Live Demo
+##  Live Demo
 
 > Open `index.html` in your browser and move your cursor near the buttons!
 
 ---
 
-## 🧠 How It Works
+##  How It Works
 
 ### The Magnetic Effect
 
@@ -70,7 +70,7 @@ new Magnetic(element, { radius: 120, strength: 0.6, lerp: 0.14 });
 
 ---
 
-## 🗂️ Project Structure
+##  Project Structure
 
 ```
 day-01-magnetic-cursor/
@@ -80,7 +80,7 @@ day-01-magnetic-cursor/
 
 ---
 
-## ⚙️ Tech Stack
+##  Tech Stack
 
 | Tech         | Usage                                  |
 |--------------|----------------------------------------|
@@ -91,7 +91,7 @@ day-01-magnetic-cursor/
 
 ---
 
-## 🔑 Key Concepts
+##  Key Concepts
 
 - **`Math.hypot(dx, dy)`** — calculates distance between two points
 - **`requestAnimationFrame`** — smooth 60fps animation loop
@@ -101,7 +101,7 @@ day-01-magnetic-cursor/
 
 ---
 
-## 🎨 Design Decisions
+##  Design Decisions
 
 - Dark `#07060f` background to make the purple glow pop
 - Animated ambient orbs in the background add depth without distraction
@@ -111,7 +111,7 @@ day-01-magnetic-cursor/
 
 ---
 
-## 🚀 Try It Yourself
+##  Try It Yourself
 
 1. Clone this repo
 2. Open `index.html` in any modern browser
@@ -125,7 +125,7 @@ open index.html
 
 ---
 
-## 💡 Want to Experiment?
+##  Want to Experiment?
 
 Try tweaking these values in the JS:
 
@@ -142,7 +142,7 @@ new Magnetic(btn, { radius: 150, strength: 0.5, lerp: 0.04 });
 
 ---
 
-## 📅 The Series
+##  The Series
 
 | Day | Project | Status |
 |-----|---------|--------|
@@ -154,13 +154,13 @@ new Magnetic(btn, { radius: 150, strength: 0.5, lerp: 0.04 });
 
 ---
 
-## 📲 Follow Along
+##  Follow Along
 
 > Built this in a day as part of my **#30DaysOfInsaneWebDev** challenge.  
 > Follow on Instagram for the daily Reels 👉 **@vladlen.codes**
 
 ---
 
-## 📄 License
+##  License
 
 MIT — use it, remix it, build on it. Just don't forget to star ⭐ the repo!
