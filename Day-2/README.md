@@ -208,11 +208,11 @@ hueT += 0.5;   // was 0.12
 
 | Day | Project | Status |
 |-----|---------|--------|
-| 01 | 🧲 Magnetic Cursor | ✅ Done |
-| 02 | 🫧 Liquid Blob Background | ✅ Done |
-| 03 | 🃏 3D Card Flip Gallery | 🔜 Tomorrow |
+| 01 | Magnetic Cursor | ✅ Done |
+| 02 | Liquid Blob Background | ✅ Done |
+| 03 | 3D Card Flip Gallery | 🔜 Tomorrow |
 | ... | ... | ... |
-| 30 | 🌗 Dark/Light Mode Flip Toggle | 🔜 Coming |
+| 30 | Dark/Light Mode Flip Toggle | 🔜 Coming |
 
 ---
 
