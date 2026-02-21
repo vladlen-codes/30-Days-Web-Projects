@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Liquid Blob Background | Day 02</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --w: 390px;
+            --h: 844px;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            background: #050508;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+        }
+
+        #phone {
+            position: relative;
+            width: var(--w);
+            height: var(--h);
+            background: #08060f;
+            border-radius: 0px;
+            overflow: hidden;
+            box-shadow: 0 40px 120px rgba(0, 0, 0, 0.95);
+        }
+
+        #blob-svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .screen-overlay {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 50% at 50% 30%, rgba(120, 40, 255, 0.10) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 60% at 80% 80%, rgba(236, 72, 153, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .content {
+            position: relative;
+            z-index: 10;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2.6rem 2rem 2.4rem;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.67rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(200, 180, 255, 0.9);
+            background: rgba(140, 80, 255, 0.12);
+            border: 1px solid rgba(140, 80, 255, 0.28);
+            border-radius: 100px;
+            padding: 0.38rem 1rem;
+        }
+
+        .badge-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #c084fc;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .25;
+            }
+        }
+
+        .hero {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 1.02;
+            color: #f5f0ff;
+            text-shadow: 0 0 60px rgba(167, 139, 250, 0.25);
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            background: linear-gradient(135deg, #a78bfa 0%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 0.88rem;
+            color: rgba(220, 210, 255, 0.5);
+            font-weight: 300;
+            line-height: 1.6;
+            letter-spacing: 0.02em;
+        }
+
+        .pills {
+            display: flex;
+            gap: 0.55rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .pill {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.32rem 0.8rem;
+            border-radius: 100px;
+            color: rgba(220, 210, 255, 0.7);
+            border: 1px solid rgba(167, 139, 250, 0.2);
+            background: rgba(167, 139, 250, 0.07);
+        }
+
+        .bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.35rem;
+            text-align: center;
+        }
+
+        .code-line {
+            font-family: 'Courier New', monospace;
+            font-size: 0.67rem;
+            color: rgba(167, 139, 250, 0.55);
+            letter-spacing: 0.04em;
+        }
+
+        .handle {
+            font-size: 0.76rem;
+            font-weight: 700;
+            color: rgba(245, 240, 255, 0.55);
+            letter-spacing: 0.06em;
+        }
+
+        .day-label {
+            font-size: 0.62rem;
+            color: rgba(255, 255, 255, 0.18);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .swatch-strip {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .swatch {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="phone">
+
+        <svg id="blob-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 844"
+            preserveAspectRatio="xMidYMid slice">
+            <defs>
+                <filter id="goo" color-interpolation-filters="sRGB">
+                    <feTurbulence id="turb" type="fractalNoise" baseFrequency="0.012 0.01" numOctaves="3" seed="4"
+                        result="noise" />
+                    <feDisplacementMap in="SourceGraphic" in2="noise" id="disp" scale="55" xChannelSelector="R"
+                        yChannelSelector="G" result="displaced" />
+                    <feColorMatrix in="displaced" type="matrix" values="1 0 0 0 0
+                  0 1 0 0 0
+                  0 0 1 0 0
+                  0 0 0 22 -10" />
+                </filter>
+
+                <filter id="soft">
+                    <feGaussianBlur stdDeviation="8" />
+                </filter>
+
+                <radialGradient id="g1" cx="50%" cy="50%" r="55%">
+                    <stop offset="0%" stop-color="#7c3aed" />
+                    <stop offset="100%" stop-color="#4c1d95" />
+                </radialGradient>
+                <radialGradient id="g2" cx="50%" cy="50%" r="55%">
+                    <stop offset="0%" stop-color="#db2777" />
+                    <stop offset="100%" stop-color="#9d174d" />
+                </radialGradient>
+                <radialGradient id="g3" cx="50%" cy="50%" r="55%">
+                    <stop offset="0%" stop-color="#2563eb" />
+                    <stop offset="100%" stop-color="#1e40af" />
+                </radialGradient>
+                <radialGradient id="g4" cx="50%" cy="50%" r="55%">
+                    <stop offset="0%" stop-color="#a21caf" />
+                    <stop offset="100%" stop-color="#701a75" />
+                </radialGradient>
+                <radialGradient id="g5" cx="50%" cy="50%" r="55%">
+                    <stop offset="0%" stop-color="#0891b2" />
+                    <stop offset="100%" stop-color="#164e63" />
+                </radialGradient>
+            </defs>
+
+            <g filter="url(#goo)">
+                <circle id="b1" cx="195" cy="200" r="145" fill="url(#g1)" opacity="0.85" />
+                <circle id="b2" cx="120" cy="520" r="120" fill="url(#g2)" opacity="0.80" />
+                <circle id="b3" cx="310" cy="420" r="110" fill="url(#g3)" opacity="0.75" />
+                <circle id="b4" cx="220" cy="680" r="100" fill="url(#g4)" opacity="0.78" />
+                <circle id="b5" cx="80" cy="320" r="90" fill="url(#g5)" opacity="0.72" />
+            </g>
+        </svg>
+
+        <div class="screen-overlay"></div>
+
+        <div class="content">
+            <div class="badge">
+                <div class="badge-dot"></div>Day 02 · Liquid Blob
+            </div>
+
+            <div class="hero">
+                <h1>Live<br /><em>Liquid</em><br />Blobs</h1>
+                <p>SVG feTurbulence + feDisplacementMap<br />pure CSS &amp; JS — zero canvas libs</p>
+                <div class="pills">
+                    <span class="pill">SVG Filter</span>
+                    <span class="pill">feTurbulence</span>
+                    <span class="pill">feDisplacement</span>
+                </div>
+                <div class="swatch-strip" id="swatches"></div>
+            </div>
+
+            <div class="bottom">
+                <div class="code-line">baseFrequency="0.012" · scale="55"</div>
+                <div class="handle">30 Days of Insane Web</div>
+                <div class="day-label">Day 02 of 30</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+
+        const blobs = [
+            { el: document.getElementById('b1'), ox: 195, oy: 200, ax: 55, ay: 45, fx: 0.0008, fy: 0.0007, phase: 0.0 },
+            { el: document.getElementById('b2'), ox: 120, oy: 520, ax: 70, ay: 55, fx: 0.0006, fy: 0.0009, phase: 1.4 },
+            { el: document.getElementById('b3'), ox: 310, oy: 420, ax: 60, ay: 70, fx: 0.0009, fy: 0.0006, phase: 2.8 },
+            { el: document.getElementById('b4'), ox: 220, oy: 680, ax: 65, ay: 45, fx: 0.0007, fy: 0.0008, phase: 0.9 },
+            { el: document.getElementById('b5'), ox: 80, oy: 320, ax: 50, ay: 60, fx: 0.0010, fy: 0.0007, phase: 2.1 },
+        ];
+
+
+        const turb = document.getElementById('turb');
+        const disp = document.getElementById('disp');
+        let bfx = 0.012, bfy = 0.010;
+
+        const phone = document.getElementById('phone');
+        let pointerX = 195, pointerY = 422;
+        let targetBfx = 0.012, targetBfy = 0.010;
+
+        phone.addEventListener('mousemove', e => {
+            const r = phone.getBoundingClientRect();
+            pointerX = e.clientX - r.left;
+            pointerY = e.clientY - r.top;
+            reactToPointer(pointerX, pointerY);
+        });
+
+        phone.addEventListener('touchmove', e => {
+            e.preventDefault();
+            const r = phone.getBoundingClientRect();
+            pointerX = e.touches[0].clientX - r.left;
+            pointerY = e.touches[0].clientY - r.top;
+            reactToPointer(pointerX, pointerY);
+        }, { passive: false });
+
+        function reactToPointer(px, py) {
+            const dx = (px - 195) / 390;
+            const dy = (py - 422) / 844;
+            const dist = Math.hypot(dx, dy);
+
+            targetBfx = 0.012 + dist * 0.022;
+            targetBfy = 0.010 + dist * 0.018;
+
+            let closest = null, minD = Infinity;
+            for (const b of blobs) {
+                const d = Math.hypot(px - b.ox, py - b.oy);
+                if (d < minD) { minD = d; closest = b; }
+            }
+            if (closest && minD < 200) {
+                const force = 1 - minD / 200;
+                closest._px = px;
+                closest._py = py;
+                closest._pf = force;
+            }
+        }
+
+        let t = 0;
+        function loop() {
+            t += 14;
+
+            for (const b of blobs) {
+                let cx = b.ox + Math.sin(t * b.fx + b.phase) * b.ax;
+                let cy = b.oy + Math.cos(t * b.fy + b.phase) * b.ay;
+
+                if (b._pf > 0) {
+                    const lf = 0.04;
+                    cx += (b._px - cx) * b._pf * lf;
+                    cy += (b._py - cy) * b._pf * lf;
+                    b._pf *= 0.97; // decay
+                }
+
+                b.el.setAttribute('cx', cx.toFixed(2));
+                b.el.setAttribute('cy', cy.toFixed(2));
+            }
+
+            bfx += (targetBfx - bfx) * 0.025;
+            bfy += (targetBfy - bfy) * 0.025;
+            targetBfx += (0.012 - targetBfx) * 0.006;
+            targetBfy += (0.010 - targetBfy) * 0.006;
+
+            const seedShift = (Math.sin(t * 0.00018) * 0.003);
+            turb.setAttribute('baseFrequency', `${(bfx + seedShift).toFixed(5)} ${(bfy + seedShift * 0.8).toFixed(5)}`);
+
+            const scaleBase = 55;
+            const scalePulse = Math.sin(t * 0.00035) * 18;
+            disp.setAttribute('scale', (scaleBase + scalePulse).toFixed(1));
+
+            requestAnimationFrame(loop);
+        }
+        loop();
+
+        const gradients = [
+            { id: 'g1', h1: 262, h2: 276 },
+            { id: 'g2', h1: 330, h2: 345 },
+            { id: 'g3', h1: 220, h2: 230 },
+            { id: 'g4', h1: 295, h2: 308 },
+            { id: 'g5', h1: 193, h2: 205 },
+        ];
+
+        let hueT = 0;
+        function cycleColors() {
+            hueT += 0.12;
+            for (const g of gradients) {
+                const el = document.getElementById(g.id);
+                const stops = el.querySelectorAll('stop');
+                const shift = Math.sin(hueT * 0.012 + g.h1 * 0.01) * 25;
+                stops[0].setAttribute('stop-color', `hsl(${g.h1 + shift}, 90%, 58%)`);
+                stops[1].setAttribute('stop-color', `hsl(${g.h2 + shift}, 80%, 30%)`);
+            }
+            requestAnimationFrame(cycleColors);
+        }
+        cycleColors();
+
+        const swatchContainer = document.getElementById('swatches');
+        const swatchColors = ['#7c3aed', '#db2777', '#2563eb', '#a21caf', '#0891b2'];
+        for (const c of swatchColors) {
+            const div = document.createElement('div');
+            div.className = 'swatch';
+            div.style.background = c;
+            div.style.boxShadow = `0 0 12px ${c}80`;
+            swatchContainer.appendChild(div);
+        }
+    </script>
+</body>
+</html>
