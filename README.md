@@ -28,7 +28,7 @@ Follow along on Instagram 👉 **[@vladlen.codes](#)**
 | Day | Project | Tech | Code |
 |-----|---------|------|------|
 | 01 | 🧲 Magnetic Cursor | HTML, CSS, Vanilla JS | [📁 Code](./Day-1/index.html) |
-| 02 | 🫧 Liquid Blob Background | CSS, SVG, JS  [📁 Code](./Day-2/index.html) |
+| 02 | 🫧 Liquid Blob Background | CSS, SVG, JS | [📁 Code](./Day-2/index.html) |
 | 03 | 🃏 3D Card Flip Gallery | HTML, CSS 3D | [📁 Code](./Day-3/index.html) |
 | 04 | 💥 Particle Text Explosion | HTML Canvas, JS | 🔜 | 🔜 |
 | 05 | 🌀 Infinite Warping Marquee | CSS, JS | 🔜 | 🔜 |
