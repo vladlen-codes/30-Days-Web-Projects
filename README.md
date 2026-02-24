@@ -2,7 +2,7 @@
 
 > One wild UI experiment. Every single day. For 30 days straight.
 
-![Progress](https://img.shields.io/badge/Progress-1%20%2F%2030-8b5cf6?style=for-the-badge)
+![Progress](https://img.shields.io/badge/Progress-5%20%2F%2030-8b5cf6?style=for-the-badge)
 ![Vanilla JS](https://img.shields.io/badge/Vanilla-JavaScript-f7df1e?style=for-the-badge&logo=javascript)
 ![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
@@ -31,7 +31,7 @@ Follow along on Instagram 👉 **[@vladlen.codes](#)**
 | 02 | 🫧 Liquid Blob Background | CSS, SVG, JS | [📁 Code](./Day-2/index.html) |
 | 03 | 🃏 3D Card Flip Gallery | HTML, CSS 3D | [📁 Code](./Day-3/index.html) |
 | 04 | 💥 Particle Text Explosion | HTML Canvas, JS | [📁 Code](./Day-4/index.html) |
-| 05 | 🌀 Infinite Warping Marquee | CSS, JS | 🔜 | 🔜 |
+| 05 | 🌀 Infinite Warping Marquee | CSS, JS | [📁 Code](./Day-5/index.html)|
 | 06 | 🎨 Animated Gradient Mesh | CSS, WebGL | 🔜 | 🔜 |
 | 07 | 📺 Glitch Hover Effect | HTML, CSS | 🔜 | 🔜 |
 | 08 | 🖌️ Cursor Paint Trail | HTML Canvas, JS | 🔜 | 🔜 |
