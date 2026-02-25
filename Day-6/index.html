@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animated Gradient Mesh | Day 06</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800;900&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            background: #010103;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+        }
+
+        #phone {
+            position: relative;
+            width: 390px;
+            height: 844px;
+            overflow: hidden;
+            box-shadow: 0 40px 120px rgba(0, 0, 0, 0.95);
+            flex-shrink: 0;
+        }
+
+        #gl {
+            position: absolute;
+            inset: 0;
+            width: 390px;
+            height: 844px;
+            display: block;
+        }
+
+        .ui {
+            position: absolute;
+            inset: 0;
+            z-index: 10;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2.5rem 1.8rem 2.2rem;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.67rem;
+            font-weight: 700;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+            color: rgba(255, 240, 255, 0.92);
+            background: rgba(255, 255, 255, 0.10);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 100px;
+            padding: 0.36rem 1rem;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .bdot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #f0abfc;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .2;
+            }
+        }
+
+        .hero {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.9rem;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            line-height: 1;
+            color: #fff;
+            text-shadow: 0 2px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            /* Clipped gradient text shows the mesh color through it */
+            background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.7) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 0.82rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.65);
+            letter-spacing: 0.04em;
+            text-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .pills {
+            display: flex;
+            gap: 0.55rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .pill {
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.3rem 0.8rem;
+            border-radius: 100px;
+            color: rgba(255, 255, 255, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.28rem;
+            text-align: center;
+        }
+
+        .code-line {
+            font-family: 'Courier New', monospace;
+            font-size: 0.66rem;
+            color: rgba(255, 230, 255, 0.55);
+            letter-spacing: 0.04em;
+            text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .handle {
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.55);
+            letter-spacing: 0.06em;
+        }
+
+        .day-label {
+            font-size: 0.62rem;
+            color: rgba(255, 255, 255, 0.22);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="phone">
+        <canvas id="gl" width="390" height="844"></canvas>
+
+        <div class="ui">
+            <div class="badge">
+                <div class="bdot"></div>Day 06 · Gradient Mesh
+            </div>
+
+            <div class="hero">
+                <h1>Animated<br /><em>Gradient</em><br />Mesh</h1>
+                <p>WebGL fragment shader · IDW blending<br />6 animated color nodes</p>
+                <div class="pills">
+                    <span class="pill">WebGL</span>
+                    <span class="pill">GLSL</span>
+                    <span class="pill">Fragment Shader</span>
+                </div>
+            </div>
+
+            <div class="bottom">
+                <div class="code-line">gl_FragColor = mix(a, b, smoothstep(0.,1.,t))</div>
+                <div class="handle">30 Days of Insane Web</div>
+                <div class="day-label">Day 06 of 30</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        const VS = `
+  attribute vec2 a_pos;
+  void main() {
+    gl_Position = vec4(a_pos, 0.0, 1.0);
+  }
+`;
+
+        const FS = `
+  precision highp float;
+
+  uniform vec2  u_res;       // canvas resolution (390,844)
+  uniform float u_time;      // elapsed seconds
+
+  /* ── 6 animated color nodes ── */
+  /* Each node: vec2 pos (0-1 space) + vec3 color (linear) */
+
+  /* -- Helper: pseudo-random hash -- */
+  float hash(vec2 p) {
+    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+  }
+
+  /* -- Film grain -- */
+  float grain(vec2 uv, float t) {
+    return hash(uv + fract(t * 0.07)) * 0.10 - 0.05;
+  }
+
+  /* -- Soft vignette -- */
+  float vignette(vec2 uv) {
+    vec2 d = uv - 0.5;
+    d.y *= u_res.y / u_res.x; // correct aspect
+    return 1.0 - smoothstep(0.35, 0.85, length(d) * 1.5);
+  }
+
+  void main() {
+    vec2 uv = gl_FragCoord.xy / u_res;
+    float t  = u_time;
+
+    /* ── Node positions (animate with sine/cos offsets) ── */
+    vec2 p0 = vec2(0.25 + 0.22*sin(t*0.40),       0.18 + 0.14*cos(t*0.33));
+    vec2 p1 = vec2(0.80 + 0.14*cos(t*0.37 + 1.2), 0.28 + 0.20*sin(t*0.29));
+    vec2 p2 = vec2(0.15 + 0.18*sin(t*0.26 + 2.4), 0.55 + 0.22*cos(t*0.44));
+    vec2 p3 = vec2(0.70 + 0.20*cos(t*0.31 + 0.7), 0.62 + 0.18*sin(t*0.38));
+    vec2 p4 = vec2(0.40 + 0.22*sin(t*0.35 + 3.1), 0.82 + 0.12*cos(t*0.27));
+    vec2 p5 = vec2(0.85 + 0.10*cos(t*0.42 + 1.8), 0.88 + 0.10*sin(t*0.33));
+
+    /* ── Correct for aspect ratio when computing distances ── */
+    float ar = u_res.y / u_res.x;  // ~2.16 for 390x844
+    vec2  fuv = vec2(uv.x, uv.y / ar);
+    vec2  fp0 = vec2(p0.x, p0.y / ar);
+    vec2  fp1 = vec2(p1.x, p1.y / ar);
+    vec2  fp2 = vec2(p2.x, p2.y / ar);
+    vec2  fp3 = vec2(p3.x, p3.y / ar);
+    vec2  fp4 = vec2(p4.x, p4.y / ar);
+    vec2  fp5 = vec2(p5.x, p5.y / ar);
+
+    /* ── Node colors (evolve hue slowly over time) ── */
+    /* Base hues: purple, pink, cyan, blue, orange, magenta */
+    vec3 c0 = 0.5 + 0.5*cos(vec3(0.0 + t*0.06, 1.0 + t*0.05, 2.6));        // purple→indigo
+    vec3 c1 = 0.5 + 0.5*cos(vec3(3.7 + t*0.07, 0.5 + t*0.06, 1.0 + t*0.05));// pink→rose
+    vec3 c2 = 0.5 + 0.5*cos(vec3(1.8 + t*0.05, 3.0 + t*0.04, 0.2 + t*0.06));// cyan→teal
+    vec3 c3 = 0.5 + 0.5*cos(vec3(4.2 + t*0.06, 1.8 + t*0.07, 0.8 + t*0.05));// blue→violet
+    vec3 c4 = 0.5 + 0.5*cos(vec3(2.4 + t*0.08, 0.2 + t*0.05, 4.0 + t*0.06));// yellow-orange
+    vec3 c5 = 0.5 + 0.5*cos(vec3(5.2 + t*0.05, 2.8 + t*0.06, 1.4 + t*0.07));// magenta
+
+    /* ── IDW blending (power = 4 for tighter radii) ── */
+    float EXP = 4.0;
+    float w0 = 1.0 / pow(max(distance(fuv, fp0), 0.0001), EXP);
+    float w1 = 1.0 / pow(max(distance(fuv, fp1), 0.0001), EXP);
+    float w2 = 1.0 / pow(max(distance(fuv, fp2), 0.0001), EXP);
+    float w3 = 1.0 / pow(max(distance(fuv, fp3), 0.0001), EXP);
+    float w4 = 1.0 / pow(max(distance(fuv, fp4), 0.0001), EXP);
+    float w5 = 1.0 / pow(max(distance(fuv, fp5), 0.0001), EXP);
+
+    float wSum = w0+w1+w2+w3+w4+w5;
+    vec3 col = (c0*w0 + c1*w1 + c2*w2 + c3*w3 + c4*w4 + c5*w5) / wSum;
+
+    /* ── Tone-map: slight boost + saturation ── */
+    col = pow(col, vec3(0.88));                   // gamma brighten
+    float lum = dot(col, vec3(0.299,0.587,0.114));
+    col = mix(vec3(lum), col, 1.35);              // saturate 1.35×
+    col = clamp(col, 0.0, 1.0);
+
+    /* ── Film grain ── */
+    col += grain(uv, t);
+
+    /* ── Vignette ── */
+    col *= mix(0.60, 1.0, vignette(uv));
+
+    col = clamp(col, 0.0, 1.0);
+    gl_FragColor = vec4(col, 1.0);
+  }
+`;
+
+        const canvas = document.getElementById('gl');
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+
+        if (!gl) {
+            canvas.style.background = 'linear-gradient(135deg,#3b0764,#db2777,#0891b2)';
+        } else {
+            function compileShader(src, type) {
+                const s = gl.createShader(type);
+                gl.shaderSource(s, src);
+                gl.compileShader(s);
+                if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+                    console.error('Shader error:', gl.getShaderInfoLog(s));
+                }
+                return s;
+            }
+
+            const prog = gl.createProgram();
+            gl.attachShader(prog, compileShader(VS, gl.VERTEX_SHADER));
+            gl.attachShader(prog, compileShader(FS, gl.FRAGMENT_SHADER));
+            gl.linkProgram(prog);
+            gl.useProgram(prog);
+
+            const buf = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+                -1, -1, 1, -1, -1, 1,
+                -1, 1, 1, -1, 1, 1,
+            ]), gl.STATIC_DRAW);
+
+            const aPos = gl.getAttribLocation(prog, 'a_pos');
+            gl.enableVertexAttribArray(aPos);
+            gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+            const uRes = gl.getUniformLocation(prog, 'u_res');
+            const uTime = gl.getUniformLocation(prog, 'u_time');
+
+            gl.uniform2f(uRes, 390, 844);
+
+            const t0 = performance.now();
+            function render() {
+                const t = (performance.now() - t0) / 1000;
+                gl.uniform1f(uTime, t);
+                gl.drawArrays(gl.TRIANGLES, 0, 6);
+                requestAnimationFrame(render);
+            }
+            render();
+        }
+    </script>
+</body>
+
+</html>
