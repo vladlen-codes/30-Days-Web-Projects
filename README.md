@@ -32,7 +32,7 @@ Follow along on Instagram 👉 **[@vladlen.codes](#)**
 | 03 | 🃏 3D Card Flip Gallery | HTML, CSS 3D | [📁 Code](./Day-3/index.html) |
 | 04 | 💥 Particle Text Explosion | HTML Canvas, JS | [📁 Code](./Day-4/index.html) |
 | 05 | 🌀 Infinite Warping Marquee | CSS, JS | [📁 Code](./Day-5/index.html)|
-| 06 | 🎨 Animated Gradient Mesh | CSS, WebGL | 🔜 | 🔜 |
+| 06 | 🎨 Animated Gradient Mesh | CSS, WebGL | [📁 Code](./Day-6/index.html) |
 | 07 | 📺 Glitch Hover Effect | HTML, CSS | 🔜 | 🔜 |
 | 08 | 🖌️ Cursor Paint Trail | HTML Canvas, JS | 🔜 | 🔜 |
 | 09 | 🪟 Drag-to-Reveal Split Screen | HTML, CSS, JS | 🔜 | 🔜 |
