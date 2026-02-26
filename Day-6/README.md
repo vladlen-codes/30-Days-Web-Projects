@@ -192,7 +192,7 @@ function render() {
 
 ---
 
-## 🗂️ Project Structure
+## Project Structure
 
 ```
 day-06-gradient-mesh/
@@ -202,7 +202,7 @@ day-06-gradient-mesh/
 
 ---
 
-## ⚙️ Tech Stack
+## Tech Stack
 
 | Tech       | Usage                                          |
 |------------|------------------------------------------------|
@@ -213,7 +213,7 @@ day-06-gradient-mesh/
 
 ---
 
-## 🔑 Key Concepts
+## Key Concepts
 
 - **Fragment shader** — GPU program that runs once per pixel per frame
 - **`gl_FragCoord`** — built-in GLSL: current pixel's screen position
@@ -226,7 +226,7 @@ day-06-gradient-mesh/
 
 ---
 
-## 🎨 Design Decisions
+## Design Decisions
 
 - `EXP = 4.0` for IDW — crisp color regions without looking like Voronoi cells
 - 6 nodes covers a 390×844 canvas well — fewer looks sparse, more is overkill
@@ -237,7 +237,7 @@ day-06-gradient-mesh/
 
 ---
 
-## 🚀 Try It Yourself
+## Try It Yourself
 
 ```bash
 git clone https://github.com/yourusername/30-days-insane-webdev.git
@@ -247,7 +247,7 @@ open index.html
 
 ---
 
-## 💡 Want to Experiment?
+## Want to Experiment?
 
 ```glsl
 /* Sharper color regions */
@@ -274,26 +274,26 @@ float w6 = 1.0 / pow(max(distance(fuv, p6), 0.0001), EXP);
 
 ---
 
-## 📅 The Series
+## The Series
 
 | Day | Project | Status |
 |-----|---------|--------|
-| 01 | 🧲 Magnetic Cursor | ✅ Done |
-| 02 | 🫧 Liquid Blob Background | ✅ Done |
-| 03 | 🃏 3D Card Flip Gallery | ✅ Done |
-| 04 | 💥 Particle Text Explosion | ✅ Done |
-| 05 | 🌀 Infinite Warping Marquee | ✅ Done |
-| 06 | 🎨 Animated Gradient Mesh | ✅ Done |
-| 07 | 📺 Glitch Hover Effect | 🔜 Tomorrow |
+| 01 | Magnetic Cursor | ✅ Done |
+| 02 | Liquid Blob Background | ✅ Done |
+| 03 | 3D Card Flip Gallery | ✅ Done |
+| 04 | Particle Text Explosion | ✅ Done |
+| 05 | Infinite Warping Marquee | ✅ Done |
+| 06 | Animated Gradient Mesh | ✅ Done |
+| 07 | Glitch Hover Effect | 🔜 Tomorrow |
 | ... | ... | ... |
-| 30 | 🌗 Dark/Light Mode Flip Toggle | 🔜 Coming |
+| 30 | Dark/Light Mode Flip Toggle | 🔜 Coming |
 
 ---
 
-## 📲 Follow Along
+## Follow Along
 
 > Built this in a day as part of my **#30DaysOfInsaneWebDev** challenge.
-> Follow on Instagram for the daily Reels 👉 **@yourhandle**
+> Follow on Instagram for the daily Reels 👉 **@vladlen.codes**
 
 ---
 
