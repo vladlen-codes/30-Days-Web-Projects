@@ -2,7 +2,7 @@
 
 > One wild UI experiment. Every single day. For 30 days straight.
 
-![Progress](https://img.shields.io/badge/Progress-5%20%2F%2030-8b5cf6?style=for-the-badge)
+![Progress](https://img.shields.io/badge/Progress-7%20%2F%2030-8b5cf6?style=for-the-badge)
 ![Vanilla JS](https://img.shields.io/badge/Vanilla-JavaScript-f7df1e?style=for-the-badge&logo=javascript)
 ![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
@@ -33,7 +33,7 @@ Follow along on Instagram 👉 **[@vladlen.codes](#)**
 | 04 | 💥 Particle Text Explosion | HTML Canvas, JS | [📁 Code](./Day-4/index.html) |
 | 05 | 🌀 Infinite Warping Marquee | CSS, JS | [📁 Code](./Day-5/index.html)|
 | 06 | 🎨 Animated Gradient Mesh | CSS, WebGL | [📁 Code](./Day-6/index.html) |
-| 07 | 📺 Glitch Hover Effect | HTML, CSS | 🔜 | 🔜 |
+| 07 | 📺 Glitch Hover Effect | HTML, CSS | [📁 Code](./Day-7/index.html) |
 | 08 | 🖌️ Cursor Paint Trail | HTML Canvas, JS | 🔜 | 🔜 |
 | 09 | 🪟 Drag-to-Reveal Split Screen | HTML, CSS, JS | 🔜 | 🔜 |
 | 10 | 🎬 Scroll-Jacked Portfolio | GSAP, ScrollTrigger | 🔜 | 🔜 |
