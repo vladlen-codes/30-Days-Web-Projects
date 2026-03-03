@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cursor Paint Trail | Day 08</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700;800;900&display=swap" rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            background: #020206;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            cursor: none;
+        }
+
+        #phone {
+            position: relative;
+            width: 390px;
+            height: 844px;
+            background: #08060f;
+            overflow: hidden;
+            box-shadow: 0 40px 120px rgba(0, 0, 0, .95);
+            flex-shrink: 0;
+            cursor: none;
+        }
+
+        #c {
+            position: absolute;
+            inset: 0;
+            width: 390px;
+            height: 844px;
+            display: block;
+        }
+
+        /* Custom cursor dot */
+        #cursor-dot {
+            position: fixed;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 0 20px rgba(167, 139, 250, .7), 0 0 40px rgba(236, 72, 153, .4);
+            pointer-events: none;
+            z-index: 100;
+            transform: translate(-50%, -50%);
+            transition: width .15s, height .15s, box-shadow .15s;
+            mix-blend-mode: screen;
+        }
+
+        #cursor-dot.pressed {
+            width: 22px;
+            height: 22px;
+            box-shadow: 0 0 30px rgba(167, 139, 250, .9), 0 0 60px rgba(236, 72, 153, .6);
+        }
+
+        /* UI overlay */
+        .ui {
+            position: absolute;
+            inset: 0;
+            z-index: 10;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2.5rem 1.8rem 2.2rem;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: .45rem;
+            font-size: .67rem;
+            font-weight: 700;
+            letter-spacing: .13em;
+            text-transform: uppercase;
+            color: rgba(196, 176, 255, .9);
+            background: rgba(120, 80, 255, .12);
+            border: 1px solid rgba(120, 80, 255, .28);
+            border-radius: 100px;
+            padding: .36rem 1rem;
+        }
+
+        .bdot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #a78bfa;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .2
+            }
+        }
+
+        .hero {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .8rem;
+        }
+
+        .hero h1 {
+            font-size: 2.6rem;
+            font-weight: 900;
+            letter-spacing: -.05em;
+            line-height: 1;
+            color: #f0ebff;
+            text-shadow: 0 0 60px rgba(167, 139, 250, .22);
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            background: linear-gradient(135deg, #a78bfa, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: .82rem;
+            font-weight: 300;
+            color: rgba(220, 210, 255, .45);
+            letter-spacing: .02em;
+        }
+
+        .pills {
+            display: flex;
+            gap: .55rem;
+            flex-wrap: wrap;
+            justify-content: center
+        }
+
+        .pill {
+            font-size: .64rem;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: .3rem .8rem;
+            border-radius: 100px;
+            color: rgba(220, 210, 255, .65);
+            border: 1px solid rgba(167, 139, 250, .2);
+            background: rgba(167, 139, 250, .07);
+        }
+
+        .bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .28rem;
+            text-align: center;
+        }
+
+        .code-line {
+            font-family: 'Courier New', monospace;
+            font-size: .66rem;
+            color: rgba(167, 139, 250, .5);
+            letter-spacing: .04em;
+        }
+
+        .handle {
+            font-size: .74rem;
+            font-weight: 700;
+            color: rgba(245, 240, 255, .5);
+            letter-spacing: .06em
+        }
+
+        .day-label {
+            font-size: .62rem;
+            color: rgba(255, 255, 255, .16);
+            letter-spacing: .12em;
+            text-transform: uppercase
+        }
+
+        /* Hint that pulses */
+        .hint {
+            font-size: .7rem;
+            font-weight: 600;
+            color: rgba(167, 139, 250, .4);
+            letter-spacing: .06em;
+            animation: hintPulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes hintPulse {
+
+            0%,
+            100% {
+                opacity: .4
+            }
+
+            50% {
+                opacity: .8
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="cursor-dot"></div>
+
+    <div id="phone">
+        <canvas id="c" width="390" height="844"></canvas>
+
+        <div class="ui">
+            <div class="badge">
+                <div class="bdot"></div>Day 08 · Paint Trail
+            </div>
+
+            <div class="hero">
+                <h1>Cursor<br /><em>Paint</em><br />Trail</h1>
+                <p>Canvas 2D · HSL cycling · velocity width</p>
+                <div class="pills">
+                    <span class="pill">Canvas</span>
+                    <span class="pill">requestAnimationFrame</span>
+                    <span class="pill">HSL</span>
+                </div>
+                <div class="hint">↑ move cursor to paint ↑</div>
+            </div>
+
+            <div class="bottom">
+                <div class="code-line">ctx.lineWidth = velocity · hue += 0.8</div>
+                <div class="handle">30 Days of Insane Web</div>
+                <div class="day-label">Day 08 of 30</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        const phone = document.getElementById('phone');
+        const canvas = document.getElementById('c');
+        const ctx = canvas.getContext('2d');
+        const dot = document.getElementById('cursor-dot');
+        const W = 390, H = 844;
+
+        let mx = W / 2, my = H / 2;
+        let pmx = mx, pmy = my;
+        let pressed = false;
+        let hue = 0;
+
+        let dotX = 0, dotY = 0;
+
+        function updatePos(e) {
+            const r = phone.getBoundingClientRect();
+            const cx = (e.clientX || e.touches?.[0]?.clientX) - r.left;
+            const cy = (e.clientY || e.touches?.[0]?.clientY) - r.top;
+            mx = Math.max(0, Math.min(W, cx));
+            my = Math.max(0, Math.min(H, cy));
+        }
+
+        phone.addEventListener('mousemove', updatePos);
+        phone.addEventListener('touchmove', e => { e.preventDefault(); updatePos(e); }, { passive: false });
+        phone.addEventListener('mousedown', () => { pressed = true; dot.classList.add('pressed'); });
+        phone.addEventListener('mouseup', () => { pressed = false; dot.classList.remove('pressed'); });
+        phone.addEventListener('touchstart', () => { pressed = true; dot.classList.add('pressed'); });
+        phone.addEventListener('touchend', () => { pressed = false; dot.classList.remove('pressed'); });
+
+
+        document.addEventListener('mousemove', e => { dotX = e.clientX; dotY = e.clientY; });
+
+        const TRAIL_LEN = 55;
+        const trail = [];
+
+        let autoMode = true;
+        let autoT = 0;
+
+        function autoPos() {
+            autoT += 0.016;
+            // Lissajous-ish path that fills the canvas
+            const ax = W * 0.5 + Math.sin(autoT * 0.7) * W * 0.32 + Math.sin(autoT * 1.9) * W * 0.12;
+            const ay = H * 0.5 + Math.cos(autoT * 0.5) * H * 0.28 + Math.cos(autoT * 1.3) * H * 0.10;
+            mx = ax;
+            my = ay;
+        }
+
+        phone.addEventListener('mousemove', () => { autoMode = false; }, { once: true });
+        phone.addEventListener('touchstart', () => { autoMode = false; }, { once: true });
+
+        function loop() {
+            if (autoMode) autoPos();
+
+            ctx.fillStyle = 'rgba(8, 6, 15, 0.06)';
+            ctx.fillRect(0, 0, W, H);
+
+            const dx = mx - pmx;
+            const dy = my - pmy;
+            const vel = Math.hypot(dx, dy);
+
+            trail.push({ x: mx, y: my, vel, hue });
+            if (trail.length > TRAIL_LEN) trail.shift();
+
+            hue = (hue + 0.8) % 360;
+
+            if (trail.length > 2) {
+                for (let i = 1; i < trail.length; i++) {
+                    const p0 = trail[i - 1];
+                    const p1 = trail[i];
+
+                    const baseW = pressed ? 12 : 5;
+                    const w = Math.min(baseW + p1.vel * 0.6, 40);
+
+                    const alpha = (i / trail.length) * (pressed ? 0.95 : 0.75);
+
+                    ctx.beginPath();
+                    ctx.moveTo(p0.x, p0.y);
+
+                    const cpx = (p0.x + p1.x) / 2;
+                    const cpy = (p0.y + p1.y) / 2;
+                    ctx.quadraticCurveTo(p0.x, p0.y, cpx, cpy);
+
+                    ctx.strokeStyle = `hsla(${p1.hue}, 90%, 65%, ${alpha})`;
+                    ctx.lineWidth = w;
+                    ctx.lineCap = 'round';
+                    ctx.lineJoin = 'round';
+
+                    ctx.shadowColor = `hsla(${p1.hue}, 100%, 60%, ${alpha * 0.6})`;
+                    ctx.shadowBlur = 18;
+
+                    ctx.stroke();
+                }
+            }
+
+            if (vel > 1.5 || pressed) {
+                const count = pressed ? 5 : 2;
+                for (let i = 0; i < count; i++) {
+                    const angle = Math.random() * Math.PI * 2;
+                    const dist = Math.random() * 20 + 5;
+                    const px = mx + Math.cos(angle) * dist;
+                    const py = my + Math.sin(angle) * dist;
+                    const r = Math.random() * 2.5 + 0.5;
+
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.arc(px, py, r, 0, Math.PI * 2);
+                    ctx.fillStyle = `hsla(${hue + Math.random() * 40 - 20}, 100%, 75%, ${0.5 + Math.random() * 0.4})`;
+                    ctx.shadowColor = `hsla(${hue}, 100%, 70%, 0.6)`;
+                    ctx.shadowBlur = 10;
+                    ctx.fill();
+                    ctx.restore();
+                }
+            }
+
+            ctx.shadowColor = 'transparent';
+            ctx.shadowBlur = 0;
+
+            pmx = mx;
+            pmy = my;
+
+            dot.style.left = dotX + 'px';
+            dot.style.top = dotY + 'px';
+
+            requestAnimationFrame(loop);
+        }
+        ctx.fillStyle = '#08060f';
+        ctx.fillRect(0, 0, W, H);
+
+        loop();
+    </script>
+</body>
+
+</html>
